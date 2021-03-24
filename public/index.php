@@ -8,6 +8,18 @@ $whoops = new \Whoops\Run;
 $whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
 $whoops->register();
 
+use Symfony\Component\HttpFoundation\Request;
+
+$request = new Request($_GET, $_POST, [], $_COOKIE, $_FILES, $_SERVER);
+$request = Request::createFromGlobals();
+
+use Symfony\Component\HttpFoundation\Response;
+
+$response = new Response('Not Found', 404);
+$response->send();
+
+
+$request = Request::createFromGlobals();
 $uri = $_SERVER['REQUEST_URI'];
 $method = $_SERVER['REQUEST_METHOD'];
 $routes = require __DIR__ . '/../config/routes.php';
