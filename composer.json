@@ -9,7 +9,6 @@
     ],
     "require": {
         "filp/whoops": "^2.11",
-        "symfony/symfony": "^5.2",
-        "symfony/routing": "^5.2"
+        "symfony/http-foundation": "^5.2"
     }
 }
