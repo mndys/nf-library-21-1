@@ -16,33 +16,35 @@ abstract class AbstractController
         $this->response = new Response();
     }
 
-    protected static function render(string $view): Response
+    protected function render(string $view): Response
     {
-        $response = new Response();
         $template = file_get_contents(__DIR__ . "/../../templates/$view.html");
-        $response->setContent($template);
+        $this->response->setContent($template);
 
-        return $response;
+        return $this->response;
     }
 
-    protected function json(mixed $data): Response
+    protected function json($data): Response
     {
-        // set content type header
-        // encode data and set as content
+        $this->response->headers->set('Content-Type', 'application/json');
+        $this->response->setContent(json_encode($data));
+
         return $this->response;
     }
 
     protected function notFound(string $message): Response
     {
-        // set 404 status code
-        // set message as content
+        $this->response->setStatusCode(404);
+        $this->response->setContent($message);
+
         return $this->response;
     }
 
     protected function redirect(string $url): Response
     {
-        // set location header with url
-        // 302 status code
+        $this->response->setStatusCode(302);
+        $this->response->headers->set('Location', $url);
+
         return $this->response;
     }
 }
