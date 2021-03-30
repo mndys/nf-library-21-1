@@ -2,9 +2,7 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-
-class CategoryController  extends AbstractController
+class CategoryController extends AbstractController
 {
     public static function show()
     {

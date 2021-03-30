@@ -2,8 +2,6 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-
 class CartController extends AbstractController
 {
     public static function show()
@@ -18,7 +16,7 @@ class CartController extends AbstractController
 
     public static function success()
     {
-        return file_get_contents(__DIR__ . '/../../templates/cart.html');
+        return file_get_contents(__DIR__ . '/../../templates/success.html');
     }
 
     public static function borrow()

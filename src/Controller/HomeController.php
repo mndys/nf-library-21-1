@@ -2,9 +2,7 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-
-class HomeController  extends AbstractController
+class HomeController extends AbstractController
 {
     public static function show()
     {
