@@ -2,6 +2,7 @@
 
 namespace App;
 
+use DI\Container;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use FastRoute;
@@ -9,11 +10,13 @@ use FastRoute;
 class Kernel
 {
     private FastRoute\Dispatcher $dispatcher;
+    private Container $container;
 
     public function __construct(string $environment)
     {
         $this->initErrorHandler($environment);
         $this->initDispatcher();
+        $this->initContainer();
     }
 
     private function initErrorhandler(string $environment): void
@@ -45,15 +48,17 @@ class Kernel
         });
     }
 
+    private function initContainer()
+    {
+        $this->container = new Container();
+    }
+
     public function handle(Request $request): Response
     {
         $routeInfo = $this->dispatcher->dispatch($request->getMethod(), $request->getRequestUri());
 
         if ($routeInfo[0] === FastRoute\Dispatcher::FOUND) {
-            $obj = new $routeInfo[1][0];
-            $method = $routeInfo[1][1];
-
-            return call_user_func([$obj, $method], $routeInfo[2]);
+            return $this->container->call($routeInfo[1], $routeInfo[2]);
         }
         
         return new Response('404 - Not Found', 404);
